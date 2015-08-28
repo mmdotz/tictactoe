@@ -23,21 +23,22 @@ end
 
 
 class Board
+
+  attr_reader :spaces, :outcome1, :outcome2, :outcome3, :outcome4, :outcome5, :outcome6, :outcome7, :outcome8
+
   def initialize
     @spaces = [0,1,2,3,4,5,6,7,8]
-  end
-
-  def winning_arrays
-
-
-  def spaces
-    @spaces
+    @outcome1 = [0,1,2]
+    @outcome2 = [3,4,5]       #board.outcome2
+    @outcome3 = [6,7,8]
+    @outcome4 = [0,3,6]
+    @outcome5 = [1,4,7]
+    @outcome6 = [2,5,8]
+    @outcome7 = [0,4,8]
+    @outcome8 = [2,4,6]
   end
 
 end
-
-
-#write winning array[arrays] --  live here because they are subsets of board
 
 class Game
 
@@ -59,8 +60,27 @@ class Game
     #human.choice_array.length
     print "You have chosen : #{human.choice_array}"
 
+    #check against winning array
+    if human.choice_array.eql?(board.outcome1)
+      puts " you won!"
+    elsif
+      human.choice_array.eql?(board.outcome2)
+    elsif
+      human.choice_array.eql?(board.outcome3)
+    elsif
+      human.choice_array.eql?(board.outcome4)
+    elsif
+      human.choice_array.eql?(board.outcome5)
+    elsif
+      human.choice_array.eql?(board.outcome6)
+    elsif
+      human.choice_array.eql?(board.outcome7)
+    elsif
+      human.choice_array.eql?(board.outcome8)
+    else
+      puts "You lose!"
+    end
   end
-  #check against winning array
 end
 
 
