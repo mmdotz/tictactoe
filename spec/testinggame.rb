@@ -1,4 +1,4 @@
-
+#####THIS IS THE FIRST NOT FINAL DRAFT#####
 
 class Player
 
@@ -16,22 +16,28 @@ class Player
 
   def choice_array
     @choice_array
-  end                       #because it started empty, it needed to be initialized
+  end                                       #because it started empty, it needed to be initialized
 
   def choose_b_position
     puts "What number on the board do you choose?"
     @choice = gets.chomp.to_i
+      # if human                            #set up X or O for player here?
+      #   spaces.index(human.choice) = "X"
+      # else
+      #   spaces.index(computer.choice etc etc) = "O"
+      # end
   end
 
-  def random_choice(arg)         #computer chooses number
-    @random_choice
+  def random_choice(x)
+    @random_choice = x
   end
+
 end
 
 
 class Board
 
-  attr_reader :spaces, :outcome1, :outcome2, :outcome3, :outcome4, :outcome5, :outcome6, :outcome7, :outcome8  # => nil
+  attr_reader :board_display, :spaces, :outcome1, :outcome2, :outcome3, :outcome4, :outcome5, :outcome6, :outcome7, :outcome8  # => nil
 
   def initialize
     @spaces = [0,1,2,3,4,5,6,7,8]
@@ -43,6 +49,28 @@ class Board
     @outcome6 = [2,5,8]
     @outcome7 = [0,4,8]
     @outcome8 = [2,4,6]
+  end
+
+  def board_display
+    puts "------------------------------------------------"
+    puts "|              |                |              |"
+    puts "|              |                |              |"
+    puts "|      #{@spaces[0]}       |        #{@spaces[1]}       |       #{@spaces[2]}      |"
+    puts "|              |                |              |"
+    puts "|              |                |              |"
+    puts  "-----------------------------------------------"
+    puts "|              |                |              |"
+    puts "|              |                |              |"
+    puts "|      #{spaces[3]}       |        #{@spaces[4]}       |       #{@spaces[5]}      |"
+    puts "|              |                |              |"
+    puts "|              |                |              |"
+    puts  "-----------------------------------------------"
+    puts "|              |                |              |"
+    puts "|              |                |              |"
+    puts "|      #{@spaces[6]}       |        #{@spaces[7]}       |       #{@spaces[8]}      |"
+    puts "|              |                |              |"
+    puts "|              |                |              |"
+    puts  "-----------------------------------------------"
   end
 
 end
@@ -67,25 +95,28 @@ class Game
     #   end
     # end
 
-    human = Player.new
+    human = Player.new                      #create player
     computer = Player.new
-    board = Board.new         #created a new board to play on
+    board = Board.new                       #created a new board to play on
 
 
-    until human.choice_array.length == 4
-    human.choose_b_position   #ask and get
+    until human.choice_array.length == 3    #separate code for draw instance?
+    human.choose_b_position                 #ask and get
       if board.spaces.include?(human.choice)
         human.build_choice_array
         board.spaces.delete(human.choice)
         puts "You have chosen #{human.choice_array} so far."
-        computer.random_choice([board.spaces].sample)     #returning nil
-        puts "Available spaces: #{board.spaces}"
+
+        board.board_display
+
+        computer.random_choice(board.spaces.sample)
         computer.build_choice_array
-        board.spaces.delete(computer.choice)
-        puts "Computer has taken a turn, choosing #{computer.choice_array}"
+        board.spaces.delete(computer.random_choice(board.spaces.sample))  #not updating board.spaces
+        puts "Computer has taken a turn, choosing #{computer.random_choice(board.spaces.sample)}"
+        puts "Available spaces: #{board.spaces}."
 
       else
-        puts "Not a valid choice.  Pick only from available spaces :#{board.spaces}"
+        puts "Not a valid choice.  Pick only from available spaces :#{board.spaces}."
       end
     end
 
@@ -94,32 +125,35 @@ class Game
     if human.choice_array.include?(board.outcome1.inspect)
       puts "You won!"
     elsif
-      human.choice_array.eql?(board.outcome2)
+      human.choice_array.include?(board.outcome2)
       puts "You won!"
     elsif
-      human.choice_array.eql?(board.outcome3)
+      human.choice_array.include?(board.outcome3)
       puts "You won!"
     elsif
-      human.choice_array.eql?(board.outcome4)
+      human.choice_array.include?(board.outcome4)
       puts "You won!"
     elsif
-      human.choice_array.eql?(board.outcome5)
+      human.choice_array.include?(board.outcome5)
       puts "You won!"
     elsif
-      human.choice_array.eql?(board.outcome6)
+      human.choice_array.include?(board.outcome6)
       puts "You won!"
     elsif
-      human.choice_array.eql?(board.outcome7)
+      human.choice_array.include?(board.outcome7)
       puts "You won!"
     elsif
-      human.choice_array.eql?(board.outcome8)
+      human.choice_array.include?(board.outcome8)
       puts "You won!"
-    elsif
-      puts "Try another number." # -- need DRAW code here --
+    elsif #none of the combinations are matches to self.choice_array
+      puts "Try another number."                # -- need DRAW code here --
       puts "Its a draw"
     else
       puts "You lose!"
     end
+
+    board.board_display
+
   end
 end
 

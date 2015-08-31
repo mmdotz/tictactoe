@@ -156,6 +156,7 @@ class Game
     computer = Player.new
     board = Board.new                       #created a new board to play on
 
+    #
     until human.choice_array.length == 4
     human.choose_b_position                 #ask and gets
       if board.spaces.include?(human.choice)
@@ -178,7 +179,6 @@ class Game
         puts "Available spaces #{board.spaces}"
 
         board.board_display                     #show board with new X
-
       else
         puts "Not a valid choice.  Pick only from available spaces :#{board.spaces}."
       end
@@ -199,9 +199,11 @@ class Game
     elsif
       human.check_win_horiz == true
       puts "You win!"
-    else
+    elsif
     computer.check_win_horiz == true
       puts "Computer wins!"
+    else
+      "Draw!"
     end
 
 
@@ -212,7 +214,6 @@ class Game
       # end
 
     #print completed game
-    board.board_display
 
   end
 end
